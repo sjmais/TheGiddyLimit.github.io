@@ -1047,6 +1047,32 @@ class IndexableFileVehicles_ShipUpgrade extends IndexableFile {
 	}
 }
 
+class IndexableFileVehicles_SpelljammerModule extends IndexableFile {
+	constructor () {
+		super({
+			category: Parser.CAT_ID_SJAM_MODULE,
+			file: "vehicles.json",
+			listProp: "vehicleUpgrade",
+			baseUrl: "vehicles.html",
+			isHover: true,
+			include: (it) => it.upgradeType.includes("SJAM:M"),
+		});
+	}
+}
+
+class IndexableFileVehicles_SpelljammerUpgrade extends IndexableFile {
+	constructor () {
+		super({
+			category: Parser.CAT_ID_SJAM_UPGRADE,
+			file: "vehicles.json",
+			listProp: "vehicleUpgrade",
+			baseUrl: "vehicles.html",
+			isHover: true,
+			include: (it) => it.upgradeType.includes("SJAM:U"),
+		});
+	}
+}
+
 class IndexableFileVehicles_InfernalWarMachineUpgrade extends IndexableFile {
 	constructor () {
 		super({
@@ -1166,6 +1192,9 @@ Omnidexer.TO_INDEX = [
 	new IndexableFileLanguages(),
 	new IndexableFileCharCreationOptions(),
 	new IndexableFileRecipes(),
+
+	new IndexableFileVehicles_SpelljammerModule(),
+	new IndexableFileVehicles_SpelljammerUpgrade(),
 ];
 
 class IndexableSpecial {

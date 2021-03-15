@@ -1670,6 +1670,8 @@ Parser.CAT_ID_PAGE = 45;
 Parser.CAT_ID_LEGENDARY_GROUP = 46;
 Parser.CAT_ID_CHAR_CREATION_OPTIONS = 47;
 Parser.CAT_ID_RECIPES = 48;
+Parser.CAT_ID_SJAM_MODULE = 49;
+Parser.CAT_ID_SJAM_UPGRADE = 50;
 
 Parser.CAT_ID_TO_FULL = {};
 Parser.CAT_ID_TO_FULL[Parser.CAT_ID_CREATURE] = "Bestiary";
@@ -1721,6 +1723,8 @@ Parser.CAT_ID_TO_FULL[Parser.CAT_ID_PAGE] = "Page";
 Parser.CAT_ID_TO_FULL[Parser.CAT_ID_LEGENDARY_GROUP] = "Legendary Group";
 Parser.CAT_ID_TO_FULL[Parser.CAT_ID_CHAR_CREATION_OPTIONS] = "Character Creation Option";
 Parser.CAT_ID_TO_FULL[Parser.CAT_ID_RECIPES] = "Recipe";
+Parser.CAT_ID_TO_FULL[Parser.CAT_ID_SJAM_MODULE] = "Spelljammer Module";
+Parser.CAT_ID_TO_FULL[Parser.CAT_ID_SJAM_UPGRADE] = "Spelljammer Upgrade";
 
 Parser.pageCategoryToFull = function (catId) {
 	return Parser._parse_aToB(Parser.CAT_ID_TO_FULL, catId);
@@ -1776,6 +1780,8 @@ Parser.CAT_ID_TO_PROP[Parser.CAT_ID_PAGE] = null;
 Parser.CAT_ID_TO_PROP[Parser.CAT_ID_LEGENDARY_GROUP] = null;
 Parser.CAT_ID_TO_PROP[Parser.CAT_ID_CHAR_CREATION_OPTIONS] = "charoption";
 Parser.CAT_ID_TO_PROP[Parser.CAT_ID_RECIPES] = "recipe";
+Parser.CAT_ID_TO_PROP[Parser.CAT_ID_SJAM_MODULE] = "vehicleUpgrade";
+Parser.CAT_ID_TO_PROP[Parser.CAT_ID_SJAM_UPGRADE] = "vehicleUpgrade";
 
 Parser.pageCategoryToProp = function (catId) {
 	return Parser._parse_aToB(Parser.CAT_ID_TO_PROP, catId);
@@ -2206,6 +2212,9 @@ Parser.VEHICLE_TYPE_TO_FULL = {
 	"IWM:W": "Infernal War Machine Variant, Weapon",
 	"IWM:A": "Infernal War Machine Upgrade, Armor",
 	"IWM:G": "Infernal War Machine Upgrade, Gadget",
+	"SJAM": "Spelljammer",
+	"SJAM:M": "Spelljammer Module",
+	"SJAM:U": "Spelljammer Upgrade",
 };
 
 Parser.vehicleTypeToFull = function (vehicleType) {

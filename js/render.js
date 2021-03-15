@@ -5974,8 +5974,24 @@ Renderer.vehicle = {
 			case "SHIP": return Renderer.vehicle._getRenderedString_ship(veh, opts);
 			case "INFWAR": return Renderer.vehicle._getRenderedString_infwar(veh, opts);
 			case "CREATURE": return Renderer.monster.getCompactRenderedString(veh, null, {...opts, isHideLanguages: true, isHideSenses: true, isCompact: false});
+			case "SJAM": return Renderer.vehicle._getRenderedString_sjam(veh, opts);
 			default: throw new Error(`Unhandled vehicle type "${veh.vehicleType}"`);
 		}
+	},
+
+	getRenderedHardpoints (veh) {
+		hpStr = ""
+		hpSet = [];
+		for (size of ["small", "medium", "large"]) {
+			if (veh.hardpoints[size] > 0) {
+				hpSet.push(veh.hardpoints[size] + " " + size.uppercaseFirst())
+			}
+		}
+		return veh.hardpoints ? hpSet.join(", ") : "\u2014";
+	},
+
+	getRenderedLandingTypes (veh) {
+		return veh.landingTypes ? veh.landingTypes.map(it => Renderer.get().render(it)).join(", ") : "\u2014";
 	},
 
 	_getRenderedString_upgrade (it, opts) {
@@ -5987,6 +6003,7 @@ Renderer.vehicle = {
 		return $$`${Renderer.utils.getExcludedTr(it, "vehicleUpgrade", UrlUtil.PG_VEHICLES)}
 			${Renderer.utils.getNameTr(it, {page: UrlUtil.PG_VEHICLES})}
 			<tr><td colspan="6"><i>${summaryParts.join(", ")}</i></td></tr>
+			<tr><td colspan="2">${[Parser.itemValueToFullMultiCurrency(it), Parser.itemWeightToFull(it)].filter(Boolean).join(", ").uppercaseFirst()}</td></tr>
 			<tr><td class="divider" colspan="6"><div></div></td></tr>
 			<tr><td colspan="6">${Renderer.get().render({entries: it.entries}, 1)}</td></tr>`;
 	},
@@ -6017,6 +6034,39 @@ Renderer.vehicle = {
 				},
 			],
 		};
+	},
+
+	_getRenderedString_sjam (veh, opts) {
+		const renderer = Renderer.get();
+		const hasToken = veh.tokenUrl || veh.hasToken;
+		const extraThClasses = !opts.isCompact && hasToken ? ["veh__name--token"] : null;
+
+		return `
+			${Renderer.utils.getExcludedTr(veh, "vehicle", UrlUtil.PG_VEHICLES)}
+			${Renderer.utils.getNameTr(veh, {extraThClasses, page: UrlUtil.PG_VEHICLES})}
+			<tr class="text"><td colspan="6"><i>${veh.origin} ${veh.class} (Mega-${Parser.sizeAbvToFull(veh.size)} Spelljammer)</i><br></td></tr>
+			<tr><td colspan="2">${Parser.itemValueToFullMultiCurrency(veh)}</td></tr>
+			${Renderer.utils.getDividerTr()}
+			<tr><td colspan="6"><div class="border"></div></td></tr>
+			<tr><td colspan="6">
+				<div><b>Armor Class</b> ${veh.hull.ac}</div>
+				<div><b>Hull Points</b> ${veh.hull.hp}</div>
+				<div><b>Bulwark Points</b> ${veh.hull.bp}</div>
+				<div><b>Speed</b> ${veh.speed.tactical} ft. (${veh.speed.mnv}&deg)</div>
+			</td></tr>
+			<tr class="text"><td colspan="6">
+				<div><b>Crew Min/Max</b> ${veh.crew.min}/${veh.crew.max}</div>
+				${veh.capCargo ? `<div><b>Cargo Hold</b> ${typeof veh.capCargo === "string" ? veh.capCargo : `${veh.capCargo} ton${veh.capCargo === 1 ? "" : "s"}`}</div>` : ""}
+				<div><b>Days of Air</b> ${veh.daysOfAir}</div>
+				<div><b>Landing Types</b> ${Renderer.vehicle.getRenderedLandingTypes(veh)}</div>
+				<div><b>Hardpoints</b> ${Renderer.vehicle.getRenderedHardpoints(veh)}</div>
+			</td></tr>
+			${Renderer.utils.getDividerTr()}
+			${veh.trait ? `<tr><td colspan="6"><div class="border"></div></td></tr>
+			<tr class="text compact"><td colspan="6">
+			${Renderer.monster.getOrderedTraits(veh, renderer).map(it => it.rendered || renderer.render(it, 2)).join("")}
+			</td></tr>` : ""}
+		`;
 	},
 
 	_getRenderedString_ship (veh, opts) {
