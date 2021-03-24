@@ -5982,7 +5982,7 @@ Renderer.vehicle = {
 	getRenderedHardpoints (veh) {
 		hpStr = ""
 		hpSet = [];
-		for (size of ["small", "medium", "large"]) {
+		for (size of ["small", "medium", "large", "special"]) {
 			if (veh.hardpoints[size] > 0) {
 				hpSet.push(veh.hardpoints[size] + " " + size.uppercaseFirst())
 			}
