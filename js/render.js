@@ -6055,7 +6055,7 @@ Renderer.vehicle = {
 				<div><b>Speed</b> ${veh.speed.tactical} ft. (${veh.speed.mnv}&deg)</div>
 			</td></tr>
 			<tr class="text"><td colspan="6">
-				<div><b>Crew Min/Max</b> ${veh.crew.min}/${veh.crew.max}</div>
+				<div><b>Crew (Min/Max)</b> ${veh.crew.min}/${veh.crew.max}</div>
 				${veh.capCargo ? `<div><b>Cargo Hold</b> ${typeof veh.capCargo === "string" ? veh.capCargo : `${veh.capCargo} ton${veh.capCargo === 1 ? "" : "s"}`}</div>` : ""}
 				<div><b>Days of Air</b> ${veh.daysOfAir}</div>
 				<div><b>Landing Types</b> ${Renderer.vehicle.getRenderedLandingTypes(veh)}</div>
